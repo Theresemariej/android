@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.ui.Modifier
 import com.example.jaze.ui.theme.JAZETheme
 
@@ -18,9 +19,12 @@ class MainActivity : ComponentActivity() {
                 /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                    Home(innerPadding)
                 }*/
-                Screen()
+                val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+                Screen(windowSizeClass)
+
+
+            }
             }
         }
     }
-}
 

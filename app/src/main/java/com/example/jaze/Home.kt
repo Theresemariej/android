@@ -3,6 +3,7 @@ package com.example.jaze
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,19 +19,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-import androidx.compose.foundation.layout.fillMaxSize
+
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.window.core.layout.WindowSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
+
 
 @Composable
 fun Home(padding: PaddingValues) {
     Column(
         modifier = Modifier.fillMaxSize().padding(padding),
-       horizontalAlignment = Alignment.CenterHorizontally) {
-
+       horizontalAlignment = Alignment.CenterHorizontally,
+       verticalArrangement = Arrangement.spacedBy(20.dp)// Espacement entre chaque élément
+    )
+    {
+        Spacer(modifier = Modifier.height(40.dp))
         Photo()
         Nom()
         Contact()
+        Boutton()
     }
 
 }
@@ -42,21 +56,42 @@ fun Screen(windowClass: WindowSizeClass) {
             Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                 Home(innerPadding)
             }
-
         }
-        /*else -> {
-            Row(Modifier.fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painterResource(R.drawable.fleur),
-                    contentDescription = "Des fleurs",
-                )
-                Text(modifier = Modifier.padding(10.dp),
-                    text = "Description de l'image")
-            }
-        }*/
-    }
+        else -> { // Ajoute des accolades ici pour le bloc else
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Colonne pour la photo
+                Column(
+                    modifier = Modifier
+                        .weight(1f) // Prend une part égale de l'espace
+                        .fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally, // Centre horizontalement
+                    verticalArrangement = Arrangement.Center // Centre verticalement
+                ) {
+                    Photo()
+                }
+
+                // Colonne pour le texte et le bouton
+                Column(
+                    modifier = Modifier
+                        .weight(1f) // Prend une part égale de l'espace
+                        .fillMaxHeight()
+                        .padding(10.dp), // Espace autour de la colonne
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(10.dp) // Espacement entre les éléments
+                ) {
+                    Nom()
+                    Contact()
+                    Boutton()
+                } // Ferme le bloc de la colonne ici
+            } // Ferme le bloc Row ici
+        } // Ferme le bloc else ici
+    } // Ferme le bloc when ici
 }
+
+
 
 
 @Composable
@@ -69,6 +104,7 @@ fun Photo(){
             .size(200.dp)
             .clip(CircleShape)
     )
+
 }
 
 @Composable
@@ -93,3 +129,15 @@ fun Contact(){
     )
 }
 
+@Composable
+fun Boutton() {
+    Button(
+        onClick = {
+            // Action à réaliser lors du clic sur le bouton
+        },
+        modifier = Modifier
+            .padding(20.dp) // Marge autour du bouton
+    ) {
+        Text(text = "Cliquez-moi !")
+    }
+}
