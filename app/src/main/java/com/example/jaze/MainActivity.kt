@@ -29,6 +29,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 class Films
 
+@Serializable
+class Home
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,21 +53,37 @@ class MainActivity : ComponentActivity() {
                     bottomBar = {
                         NavigationBar {
                             NavigationBarItem(
-                                icon = {  Image(
-                                    painterResource(R.drawable.film),
-                                    contentDescription = "icon film",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .size(20.dp)
-                                )
-                                       }, label = { Text("Mon profil") },
+                                icon = {
+                                    Image(
+                                        painterResource(R.drawable.film),
+                                        contentDescription = "icon film",
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .size(20.dp)
+                                    )
+                                }, label = { Text("Mon profil") },
                                 selected = currentDestination?.hasRoute<Films>() == true,
                                 onClick = { navController.navigate(Films()) })
+
+
+                            NavigationBarItem(
+                                icon = {
+                                    Image(
+                                        painterResource(R.drawable.film),
+                                        contentDescription = "icon film",
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .size(20.dp)
+                                    )
+                                }, label = { Text("Mon profil") },
+                                selected = currentDestination?.hasRoute<Home>() == true,
+                                onClick = { navController.navigate(Home()) })
                         }
-                    })
+            })
+
                 { innerPadding ->
                     NavHost(
-                        navController, startDestination = Films(),
+                        navController, startDestination = Home(),
                         Modifier.padding(innerPadding)
                     ) {
                         composable<Films> { FilmsScreen() }

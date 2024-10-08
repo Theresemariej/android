@@ -7,7 +7,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun FilmsScreen(){
-    Text(
-        text = "Text"
-    )
+
 }
