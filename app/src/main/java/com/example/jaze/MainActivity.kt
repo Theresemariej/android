@@ -87,6 +87,7 @@ class MainActivity : ComponentActivity() {
                         Modifier.padding(innerPadding)
                     ) {
                         composable<Films> { FilmsScreen() }
+                        composable<Home> { Screen(windowSizeClass) }
                     }
                 }
             }
