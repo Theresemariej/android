@@ -3,10 +3,10 @@ package com.example.jaze
 
 data class ModelListFilms(
     val page: Int,
-    val results: List<ModelFilm>,
     val total_pages: Int,
-    val total_results: Int
-)
+    val total_results: Int,
+    val results: List<ModelFilm>)
+
 
 data class ModelFilm(
     val adult: Boolean,

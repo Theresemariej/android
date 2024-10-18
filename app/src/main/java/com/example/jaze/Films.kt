@@ -1,16 +1,16 @@
 package com.example.jaze
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.getValue
+
 
 @Composable
     fun FilmsScreen(ViewModel: MainViewModel) {
 
 
-        val film = ViewModel.movies.collectAsState() //permet de collecter tous les films de movies
+        val film by ViewModel.movies.collectAsState() //permet de collecter tous les films de movies
 
         LaunchedEffect(Unit)
         {
