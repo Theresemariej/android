@@ -43,11 +43,14 @@ class MainActivity : ComponentActivity() {
                    Home(innerPadding)
                 }*/
                 val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+
                 Screen(windowSizeClass)
+
                 val navController = rememberNavController()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
                 val viewModel: MainViewModel = viewModel()
+
 
                 Scaffold(
                     bottomBar = {
@@ -86,7 +89,7 @@ class MainActivity : ComponentActivity() {
                         navController, startDestination = Home(),
                         Modifier.padding(innerPadding)
                     ) {
-                        composable<Films> { FilmsScreen(viewModel) }
+                        composable<Films> { FilmsScreen(viewModel, navController) }
                         composable<Home> { Screen(windowSizeClass) }
                     }
                 }
