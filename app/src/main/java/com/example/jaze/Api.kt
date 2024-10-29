@@ -28,7 +28,6 @@ interface Api {
 
 
 /*
-
       @GET("trending/tv/week")
         suspend fun lastseries(
                 @Query("api_key")  api_key: String, 
