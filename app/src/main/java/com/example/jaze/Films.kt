@@ -55,7 +55,7 @@ fun AfficherFilm(film: ModelFilm, navController: NavController) {
     Column( modifier = Modifier
         .padding(8.dp)
         .clickable {
-            navController.navigate("infosFilm/${film.id}")//on va dans la classe infoFilm
+            navController.navigate("FilmInfos/${film.id}")//on va dans la classe FilmInfos
         }
     ) {
         // Affichage des informations du film

@@ -50,10 +50,11 @@ class MainActivity : ComponentActivity() {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
                 val viewModel: MainViewModel = viewModel()
-
+               
 
                 Scaffold(
                     bottomBar = {
+                        if (!currentDestination?.route == "Home") {
                         NavigationBar {
                             NavigationBarItem(
                                 icon = {
@@ -64,7 +65,7 @@ class MainActivity : ComponentActivity() {
                                         modifier = Modifier
                                             .size(20.dp)
                                     )
-                                }, label = { Text("Mon profil") },
+                                }, label = { Text("Films") },
                                 selected = currentDestination?.hasRoute<Films>() == true,
                                 onClick = { navController.navigate(Films()) })
 
@@ -78,9 +79,23 @@ class MainActivity : ComponentActivity() {
                                         modifier = Modifier
                                             .size(20.dp)
                                     )
-                                }, label = { Text("Mon profil") },
-                                selected = currentDestination?.hasRoute<Home>() == true,
-                                onClick = { navController.navigate(Home()) })
+                                }, label = { Text("Series") },
+                                selected = currentDestination?.hasRoute<Series>() == true,
+                                onClick = { navController.navigate(Series()) })
+
+                                 NavigationBarItem(
+                                icon = {
+                                    Image(
+                                        painterResource(R.drawable.film),
+                                        contentDescription = "icon film",
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .size(20.dp)
+                                    )
+                                }, label = { Text("Acteurs") },
+                                selected = currentDestination?.hasRoute<Acteurs>() == true,
+                                onClick = { navController.navigate(Acteurs()) })
+                        }
                         }
             })
 
@@ -90,7 +105,16 @@ class MainActivity : ComponentActivity() {
                         Modifier.padding(innerPadding)
                     ) {
                         composable<Films> { FilmsScreen(viewModel, navController) }
+                        composable<Series> { SeriesScreen(viewModel, navController) }
+                        composable<Acteurs> { ActeursScreen(viewModel, navController) }
                         composable<Home> { Screen(windowSizeClass) }
+
+                        composable(
+                        "FilmInfos/{filmId}",
+                    ) { backStackEntry ->
+                        val movieId = backStackEntry.arguments?.getInt("filmId")
+                            FilmInfosScreen(viewModel, navController, filmId = it)
+                        }
                     }
                 }
             }

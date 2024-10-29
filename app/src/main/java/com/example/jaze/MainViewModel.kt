@@ -10,6 +10,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class MainViewModel : ViewModel() {
 
     val api_key = "b57151d36fecd1b693da830a2bc5766f"
+    val language = "fr"
 
     val retrofit = Retrofit.Builder()
         .baseUrl("https://api.themoviedb.org/3/")
@@ -20,14 +21,43 @@ class MainViewModel : ViewModel() {
     // à partir de là, on peut appeler api.lastMovies(...)
 
     val movies = MutableStateFlow<List<ModelFilm>>(listOf())
+    val movieById =  MutableStateFlow<ModelFilm>(null)
+
+    val series = MutableStateFlow<List<ModelSerie>>(listOf())
+    val actors = MutableStateFlow<List<ModelActeur>>(listOf())
 
     fun getMovies() {
         viewModelScope.launch {
-            movies.value = api.lastmovies(api_key).results
+            movies.value = api.lastmovies(api_key, language).results
         /*withContext permet de changer le contexte dans lequel une coroutine s'exécute.
         *dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers. */
         }
     }
+
+     fun getMovieById(id_film:Int) {
+        viewModelScope.launch {
+            movieById.value = api.moviedetails(api_key, language,id_film)
+        /*withContext permet de changer le contexte dans lequel une coroutine s'exécute.
+        *dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers. */
+        }
+    }
+
+/* 
+     fun getSeries() {
+        viewModelScope.launch {
+            series.value = api.lastseries(api_key, language).results
+        //withContext permet de changer le contexte dans lequel une coroutine s'exécute.
+        //dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers.
+        }
+    }
+
+    fun getActors() {
+        viewModelScope.launch {
+            actors.value = api.lastseries(api_key, language).results
+        //withContext permet de changer le contexte dans lequel une coroutine s'exécute.
+        //dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers.
+        }
+    }*/
 }
 
 
