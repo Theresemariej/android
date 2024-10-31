@@ -22,6 +22,7 @@ class MainViewModel : ViewModel() {
 
     val movies = MutableStateFlow<List<ModelFilm>>(listOf())
     val movieById =  MutableStateFlow<ModelFilm>(null)
+    //val searchMovies = MutableStateFlow<List<ModelFilm>>(listOf())
 
     val series = MutableStateFlow<List<ModelSerie>>(listOf())
     val actors = MutableStateFlow<List<ModelActeur>>(listOf())
@@ -41,6 +42,15 @@ class MainViewModel : ViewModel() {
         *dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers. */
         }
     }
+
+     fun getSearchMovies(query: String) {
+        viewModelScope.launch {
+            movies.value = api.requestedmovies(api_key, language,query).results
+        /*withContext permet de changer le contexte dans lequel une coroutine s'exécute.
+        *dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers. */
+        }
+    }
+
 
 /* 
      fun getSeries() {

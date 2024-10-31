@@ -33,7 +33,7 @@ import androidx.compose.foundation.layout.height
 
 
 @Composable
-fun Home(padding: PaddingValues) {
+fun Home(padding: PaddingValues, navController: NavHostController) {
     Column(
         modifier = Modifier.fillMaxSize().padding(padding),
        horizontalAlignment = Alignment.CenterHorizontally,
@@ -44,13 +44,13 @@ fun Home(padding: PaddingValues) {
         Photo()
         Nom()
         Contact()
-        Boutton()
+        Bouton(navController: NavHostController)
     }
 
 }
 
 @Composable
-fun Screen(windowClass: WindowSizeClass) {
+fun Screen(windowClass: WindowSizeClass, navController: NavHostController) {
     when (windowClass.windowWidthSizeClass) {
         WindowWidthSizeClass.COMPACT -> {
             Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -84,7 +84,7 @@ fun Screen(windowClass: WindowSizeClass) {
                 ) {
                     Nom()
                     Contact()
-                    Boutton()
+                    Bouton(navController: NavHostController)
                 } // Ferme le bloc de la colonne ici
             } // Ferme le bloc Row ici
         } // Ferme le bloc else ici
@@ -130,14 +130,10 @@ fun Contact(){
 }
 
 @Composable
-fun Boutton() {
+fun Bouton(navController: NavHostController) {
     Button(
-        onClick = {
-            // Action à réaliser lors du clic sur le bouton
-        },
-        modifier = Modifier
-            .padding(20.dp) // Marge autour du bouton
+        onClick = { navController.navigate(Films()) },
     ) {
-        Text(text = "Cliquez-moi !")
+        Text(text = "Afficher films")
     }
 }

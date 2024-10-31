@@ -107,12 +107,17 @@ class MainActivity : ComponentActivity() {
                         composable<Films> { FilmsScreen(viewModel, navController) }
                         composable<Series> { SeriesScreen(viewModel, navController) }
                         composable<Acteurs> { ActeursScreen(viewModel, navController) }
-                        composable<Home> { Screen(windowSizeClass) }
+                        composable<Home> { Screen(windowSizeClass, navController) }
 
                         composable(
                         "FilmInfos/{filmId}",
                     ) { backStackEntry ->
                         val movieId = backStackEntry.arguments?.getInt("filmId")
+                            FilmInfosScreen(viewModel, navController, filmId = it)
+                        }
+
+                        composable<Films>{ backStackEntry ->
+                        val query = backStackEntry.arguments?.getInt("filmId")
                             FilmInfosScreen(viewModel, navController, filmId = it)
                         }
                     }

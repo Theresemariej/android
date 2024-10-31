@@ -20,6 +20,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
+import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 
 
 
@@ -41,20 +45,23 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
        verticalArrangement = Arrangement.spacedBy(20.dp)// Espacement entre chaque élément
     )
     {
+        items(film) { infos ->
+     
         Spacer(modifier = Modifier.height(40.dp))
-        Text(text = film.title)
-        Image()   
-        Informations()
-        Acteurs()
+        Text(text = infos.title)
+        Image(infos: ModelFilm)   
+        Informations(infos: ModelFilm)
+        Acteurs(infos: ModelFilm)
+        }
 }
 
         
     }
 
 @Composable
-fun Image(){
+fun Image(infos: ModelFilm){
     AsyncImage(
-            model = "https://image.tmdb.org/t/p/w500${film.poster_path}",
+            model = "https://image.tmdb.org/t/p/w500${infos.poster_path}",
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -65,40 +72,41 @@ fun Image(){
 }
 
 @Composable
-fun Informations(){
+fun Informations(infos: ModelFilm){
     
         Text(text = "Genres")
-        film.genre.forEach { Genre ->
+        infos.genre.forEach { Genre ->
         Text(text = Genre.name) // Supposons que chaque genre a un champ `name`
          }
-        Text(text = film.overview)
-        Text(text = film.original_language)
-        Text(text = "Titre original: ${film.original_title}")
+        Text(text = infos.overview)
+        Text(text = infos.original_language)
+        Text(text = "Titre original: ${infos.original_title}")
 
-        //Text(text = "Nationalité: ${film.origin_country.joinToString(", ")}")
+        //Text(text = "Nationalité: ${infos.origin_country.joinToString(", ")}")
         Text(text = "Nationalité:")
-        film.origin_country.forEach { country ->
+        infos.origin_country.forEach { country ->
         Text(text = country) // Supposons que chaque genre a un champ `name`
          }
 }
 
 @Composable
-fun Acteurs(){
-    azyVerticalGrid(
+fun Acteurs(infos: ModelFilm){
+    LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.padding(16.dp),
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            val lesActeurs=film.credits.cast.take(6)
+            val lesActeurs=infos.credits.cast.take(6)
+            
             items(lesActeurs) { unActeur ->
            Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .padding(4.dp)
                     .clickable {
-                        navController.navigate("acteurDetails/${actor.id}")
+                        navController.navigate("acteurDetails/${unActeur.id}")
                     }
             ) {
                 

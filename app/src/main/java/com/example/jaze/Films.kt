@@ -20,6 +20,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
+import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberSaveable
 
 
 
@@ -27,6 +31,7 @@ import coil.compose.AsyncImage
 fun FilmsScreen(ViewModel: MainViewModel,  navController: NavController) {
 
     val lesfilms by ViewModel.movies.collectAsState() //permet de collecter tous les films de movies
+    var text by rememberSaveable { mutableStateOf("") }
 
 
     LaunchedEffect(Unit)
@@ -35,6 +40,16 @@ fun FilmsScreen(ViewModel: MainViewModel,  navController: NavController) {
     }
 
     Column {
+
+          SearchBar(
+            query = text,
+            onQueryChange = { text = it },
+            onSearch = { ViewModel.getSearchMovies(text)},
+            placeholder = { Text("titre du film") },
+            modifier = Modifier
+                .height(70.dp)
+                .align(Alignment.CenterHorizontally) // Aligne horizontalement
+        ) { }
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -71,5 +86,3 @@ fun AfficherFilm(film: ModelFilm, navController: NavController) {
         )
     }
 }
-
-
