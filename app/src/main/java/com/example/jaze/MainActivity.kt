@@ -25,7 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jaze.ui.theme.JAZETheme
 import androidx.navigation.NavDestination.Companion.hasRoute
 import kotlinx.serialization.Serializable
-
+//shearchBar and forEach pour filmInfo
 
 @Serializable
 class Films
