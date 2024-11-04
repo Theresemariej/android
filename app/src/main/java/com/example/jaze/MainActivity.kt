@@ -58,50 +58,9 @@ class MainActivity : ComponentActivity() {
 
                 //Screen(windowSizeClass, navController)
                 Scaffold(
-
                     bottomBar = {
                         if (currentDestination?.route != "Home") {
-                        NavigationBar {
-                                NavigationBarItem(
-                                    icon = {
-                                        Image(
-                                            painterResource(R.drawable.film),
-                                            contentDescription = "icon film",
-                                            contentScale = ContentScale.Crop,
-                                            modifier = Modifier
-                                                .size(20.dp)
-                                        )
-                                    }, label = { Text("Films") },
-                                    selected = currentDestination?.hasRoute<Films>() == true,
-                                    onClick = { navController.navigate(Films()) })
-
-
-                                NavigationBarItem(
-                                    icon = {
-                                        Image(
-                                            painterResource(R.drawable.film),
-                                            contentDescription = "icon film",
-                                            contentScale = ContentScale.Crop,
-                                            modifier = Modifier
-                                                .size(20.dp)
-                                        )
-                                    }, label = { Text("Series") },
-                                    selected = currentDestination?.hasRoute<Series>() == true,
-                                    onClick = { navController.navigate(Series()) })
-
-                                NavigationBarItem(
-                                    icon = {
-                                        Image(
-                                            painterResource(R.drawable.film),
-                                            contentDescription = "icon film",
-                                            contentScale = ContentScale.Crop,
-                                            modifier = Modifier
-                                                .size(20.dp)
-                                        )
-                                    }, label = { Text("Acteurs") },
-                                    selected = currentDestination?.hasRoute<Acteurs>() == true,
-                                    onClick = { navController.navigate(Acteurs()) })
-                            }
+                            barreDuBas()
                         }
             })
 
@@ -116,12 +75,15 @@ class MainActivity : ComponentActivity() {
                         composable<Acteurs> { ActeursScreen(viewModel, navController) }
                         composable<Home> { Screen(windowSizeClass, navController) }
 
-                        composable(
-                        "FilmInfos/{filmId}",
-                    ) { backStackEntry ->
-                        val movieId = backStackEntry.arguments?.getInt("filmId")
-                            if (movieId != null) {
-                                FilmInfosScreen(viewModel, navController, movieId)
+                        c  composable("FilmInfos/{id}") { navBackStackEntry ->
+                            val id = navBackStackEntry.arguments?.getString("id")
+                            //on vérifie si l'id n'est pas vide
+                            id?.let { id ->
+                                FilmInfosSreen(
+                                    model = viewModel,
+                                    navController = navController,
+                                    id = id
+                                )
                             }
                         }
 
@@ -129,5 +91,51 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+}
+
+
+@composable
+Fun barreDuBas(){
+    NavigationBar {
+        NavigationBarItem(
+            icon = {
+                Image(
+                    painterResource(R.drawable.film),
+                    contentDescription = "icon film",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }, label = { Text("Films") },
+            selected = currentDestination?.hasRoute<Films>() == true,
+            onClick = { navController.navigate(Films()) })
+
+
+        NavigationBarItem(
+            icon = {
+                Image(
+                    painterResource(R.drawable.film),
+                    contentDescription = "icon film",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }, label = { Text("Series") },
+            selected = currentDestination?.hasRoute<Series>() == true,
+            onClick = { navController.navigate(Series()) })
+
+        NavigationBarItem(
+            icon = {
+                Image(
+                    painterResource(R.drawable.film),
+                    contentDescription = "icon film",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }, label = { Text("Acteurs") },
+            selected = currentDestination?.hasRoute<Acteurs>() == true,
+            onClick = { navController.navigate(Acteurs()) })
     }
 }

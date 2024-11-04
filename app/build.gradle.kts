@@ -75,4 +75,6 @@ dependencies {
     implementation ("androidx.compose.foundation:foundation:1.4.0-alpha01")
     implementation("io.coil-kt:coil-compose:2.1.0")
 
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+
 }

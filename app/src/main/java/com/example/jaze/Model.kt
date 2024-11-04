@@ -36,7 +36,19 @@ data class ModelFilm(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-)
+)/*{
+    fun doesMatch(query:String):Boolean{
+        val matchingCombinations = listOf(
+            "$title",
+            "$original_title"
+        )
+         // Retourne `true` si une des combinaisons contient la query
+        return matchingCombinations.any { 
+             it.contains(query, ignoreCase = true) 
+        }
+    }
+
+}*/
 
 
 data class ModelListActeurs(

@@ -47,7 +47,42 @@ fun FilmsScreen(ViewModel: MainViewModel,  navController: NavController) {
         ViewModel.getMovies()
     }
 
+    /*override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+        setContent{
+            SearchFieldComposeTheme{
+                val viewModel = viewModel<MainViewModel>()
+                val searchText by viewModel.searchText.collectAsState()
+                val isSearching by viewModel.isSearching.collectAsState()
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ){TextField(
+                    value=searchText,
+                    getSearchMovies(value)
+                    onValueChange=viewModel::onSearchTextChange,
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = {Text(text="Chercher")}
+
+                )
+                Spacer(modifier = Modifier.height(16.dp))}
+        }
+    }
+ }*/
+
+
     Column {
+        SearchBar(
+            query = text,
+            onQueryChange = { text = it },
+            onSearch = { ViewModel.getSearchMovies(text) },
+            placeholder = { Text("Chercher") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .height(70.dp)
+                        )
 
 
         LazyVerticalGrid(
@@ -56,13 +91,14 @@ fun FilmsScreen(ViewModel: MainViewModel,  navController: NavController) {
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
-            items(lesfilms) { unfilm ->
-                AfficherFilm(film = unfilm, navController = navController)
+            ) {
+                items(lesfilms) { unfilm ->
+                    AfficherFilm(film = unfilm, navController = navController)
+                }
             }
-        }
     }
 }
+   
 
 @Composable
 fun AfficherFilm(film: ModelFilm, navController: NavController) {
