@@ -45,12 +45,12 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
        verticalArrangement = Arrangement.spacedBy(20.dp)// Espacement entre chaque élément
     )
     {
-        film.forEach { infos ->
+        film?.let { infos ->
      
         Spacer(modifier = Modifier.height(40.dp))
         Text(text = infos.title)
-        Image(infos: ModelFilm)   
-        Informations(infos: ModelFilm)
+        Image(infos)
+        Informations(infos)
         Acteurs(infos, navController)
         }
 }

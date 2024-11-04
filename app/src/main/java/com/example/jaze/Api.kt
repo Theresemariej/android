@@ -11,20 +11,19 @@ interface Api {
                 @Query("language") language: String
     ): ModelListFilms
 
-       @GET("seash/movie")
+    @GET("movie/{id}")
+    suspend fun moviedetails(
+        @Query("api_key")  api_key: String,
+        @Query("language") language: String,
+        @Query("id_film") id_film: Int
+    ): ModelFilm
+
+       @GET("search/movie")
         suspend fun requestedmovies(
                 @Query("api_key")  api_key: String, 
                 @Query("language") language: String,
-                @Query("recherche") recherche: String
+                @Query("query") query: String
     ): ModelListFilms
-
-         @GET("movie/{id}")
-        suspend fun moviedetails(
-                @Query("api_key")  api_key: String, 
-                @Query("language") language: String,
-                @Query("id_film") id_film: Int
-    ): ModelMovie
-
 
 
 /*

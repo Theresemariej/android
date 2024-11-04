@@ -15,24 +15,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.grid.items
 import androidx.navigation.NavController
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.clip
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilmsScreen(ViewModel: MainViewModel,  navController: NavController) {
 
     val lesfilms by ViewModel.movies.collectAsState() //permet de collecter tous les films de movies
     var text by rememberSaveable { mutableStateOf("") }
+    var isSearchActive by rememberSaveable { mutableStateOf(false) } // État de la recherche
 
 
     LaunchedEffect(Unit)
@@ -42,15 +49,6 @@ fun FilmsScreen(ViewModel: MainViewModel,  navController: NavController) {
 
     Column {
 
-          SearchBar(
-            query = text,
-            onQueryChange = { text = it },
-            onSearch = { ViewModel.getSearchMovies(text)},
-            placeholder = { Text("titre du film") },
-            modifier = Modifier
-                .height(70.dp)
-                .align(Alignment.CenterHorizontally) // Aligne horizontalement
-        ) { }
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),

@@ -1,5 +1,7 @@
 package com.example.jaze
 
+import ActeursScreen
+import SeriesScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -55,54 +57,55 @@ class MainActivity : ComponentActivity() {
                 val currentDestination = navBackStackEntry?.destination
                 val viewModel: MainViewModel = viewModel()
 
-                Screen(windowSizeClass, navController)
-
+                //Screen(windowSizeClass, navController)
                 Scaffold(
+
                     bottomBar = {
                         if (currentDestination?.route != "Home") {
                         NavigationBar {
-                            NavigationBarItem(
-                                icon = {
-                                    Image(
-                                        painterResource(R.drawable.film),
-                                        contentDescription = "icon film",
-                                        contentScale = ContentScale.Crop,
-                                        modifier = Modifier
-                                            .size(20.dp)
-                                    )
-                                }, label = { Text("Films") },
-                                selected = currentDestination?.hasRoute<Films>() == true,
-                                onClick = { navController.navigate(Films()) })
+                                NavigationBarItem(
+                                    icon = {
+                                        Image(
+                                            painterResource(R.drawable.film),
+                                            contentDescription = "icon film",
+                                            contentScale = ContentScale.Crop,
+                                            modifier = Modifier
+                                                .size(20.dp)
+                                        )
+                                    }, label = { Text("Films") },
+                                    selected = currentDestination?.hasRoute<Films>() == true,
+                                    onClick = { navController.navigate(Films()) })
 
 
-                            NavigationBarItem(
-                                icon = {
-                                    Image(
-                                        painterResource(R.drawable.film),
-                                        contentDescription = "icon film",
-                                        contentScale = ContentScale.Crop,
-                                        modifier = Modifier
-                                            .size(20.dp)
-                                    )
-                                }, label = { Text("Series") },
-                                selected = currentDestination?.hasRoute<Series>() == true,
-                                onClick = { navController.navigate(Series()) })
+                                NavigationBarItem(
+                                    icon = {
+                                        Image(
+                                            painterResource(R.drawable.film),
+                                            contentDescription = "icon film",
+                                            contentScale = ContentScale.Crop,
+                                            modifier = Modifier
+                                                .size(20.dp)
+                                        )
+                                    }, label = { Text("Series") },
+                                    selected = currentDestination?.hasRoute<Series>() == true,
+                                    onClick = { navController.navigate(Series()) })
 
-                                 NavigationBarItem(
-                                icon = {
-                                    Image(
-                                        painterResource(R.drawable.film),
-                                        contentDescription = "icon film",
-                                        contentScale = ContentScale.Crop,
-                                        modifier = Modifier
-                                            .size(20.dp)
-                                    )
-                                }, label = { Text("Acteurs") },
-                                selected = currentDestination?.hasRoute<Acteurs>() == true,
-                                onClick = { navController.navigate(Acteurs()) })
-                        }
+                                NavigationBarItem(
+                                    icon = {
+                                        Image(
+                                            painterResource(R.drawable.film),
+                                            contentDescription = "icon film",
+                                            contentScale = ContentScale.Crop,
+                                            modifier = Modifier
+                                                .size(20.dp)
+                                        )
+                                    }, label = { Text("Acteurs") },
+                                    selected = currentDestination?.hasRoute<Acteurs>() == true,
+                                    onClick = { navController.navigate(Acteurs()) })
+                            }
                         }
             })
+
 
                 { innerPadding ->
                     NavHost(
@@ -118,7 +121,9 @@ class MainActivity : ComponentActivity() {
                         "FilmInfos/{filmId}",
                     ) { backStackEntry ->
                         val movieId = backStackEntry.arguments?.getInt("filmId")
-                            FilmInfosScreen(viewModel, navController, movieId)
+                            if (movieId != null) {
+                                FilmInfosScreen(viewModel, navController, movieId)
+                            }
                         }
 
                     }
