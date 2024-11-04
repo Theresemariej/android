@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.navigation.NavHostController
 
 
 @Composable
@@ -44,7 +45,7 @@ fun Home(padding: PaddingValues, navController: NavHostController) {
         Photo()
         Nom()
         Contact()
-        Bouton(navController: NavHostController)
+        Bouton(navController)
     }
 
 }
@@ -54,7 +55,7 @@ fun Screen(windowClass: WindowSizeClass, navController: NavHostController) {
     when (windowClass.windowWidthSizeClass) {
         WindowWidthSizeClass.COMPACT -> {
             Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                Home(innerPadding)
+                Home(innerPadding, navController)
             }
         }
         else -> { // Ajoute des accolades ici pour le bloc else
@@ -84,7 +85,7 @@ fun Screen(windowClass: WindowSizeClass, navController: NavHostController) {
                 ) {
                     Nom()
                     Contact()
-                    Bouton(navController: NavHostController)
+                    Bouton(navController)
                 } // Ferme le bloc de la colonne ici
             } // Ferme le bloc Row ici
         } // Ferme le bloc else ici

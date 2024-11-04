@@ -33,6 +33,12 @@ class Films
 @Serializable
 class Home
 
+@Serializable
+class Series
+
+@Serializable
+class Acteurs
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,17 +50,16 @@ class MainActivity : ComponentActivity() {
                 }*/
                 val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
 
-                Screen(windowSizeClass)
-
                 val navController = rememberNavController()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
                 val viewModel: MainViewModel = viewModel()
-               
+
+                Screen(windowSizeClass, navController)
 
                 Scaffold(
                     bottomBar = {
-                        if (!currentDestination?.route == "Home") {
+                        if (currentDestination?.route != "Home") {
                         NavigationBar {
                             NavigationBarItem(
                                 icon = {
@@ -113,13 +118,9 @@ class MainActivity : ComponentActivity() {
                         "FilmInfos/{filmId}",
                     ) { backStackEntry ->
                         val movieId = backStackEntry.arguments?.getInt("filmId")
-                            FilmInfosScreen(viewModel, navController, filmId = it)
+                            FilmInfosScreen(viewModel, navController, movieId)
                         }
 
-                        composable<Films>{ backStackEntry ->
-                        val query = backStackEntry.arguments?.getInt("filmId")
-                            FilmInfosScreen(viewModel, navController, filmId = it)
-                        }
                     }
                 }
             }

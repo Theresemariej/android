@@ -22,9 +22,10 @@ import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberSaveable
-
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 
 
 @Composable

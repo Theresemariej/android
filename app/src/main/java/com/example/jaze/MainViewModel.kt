@@ -21,7 +21,7 @@ class MainViewModel : ViewModel() {
     // à partir de là, on peut appeler api.lastMovies(...)
 
     val movies = MutableStateFlow<List<ModelFilm>>(listOf())
-    val movieById =  MutableStateFlow<ModelFilm>(null)
+    val movieById =  MutableStateFlow<ModelFilm?>(null)
     //val searchMovies = MutableStateFlow<List<ModelFilm>>(listOf())
 
     val series = MutableStateFlow<List<ModelSerie>>(listOf())
@@ -30,24 +30,18 @@ class MainViewModel : ViewModel() {
     fun getMovies() {
         viewModelScope.launch {
             movies.value = api.lastmovies(api_key, language).results
-        /*withContext permet de changer le contexte dans lequel une coroutine s'exécute.
-        *dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers. */
         }
     }
 
      fun getMovieById(id_film:Int) {
         viewModelScope.launch {
             movieById.value = api.moviedetails(api_key, language,id_film)
-        /*withContext permet de changer le contexte dans lequel une coroutine s'exécute.
-        *dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers. */
         }
     }
 
      fun getSearchMovies(query: String) {
         viewModelScope.launch {
             movies.value = api.requestedmovies(api_key, language,query).results
-        /*withContext permet de changer le contexte dans lequel une coroutine s'exécute.
-        *dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers. */
         }
     }
 
@@ -56,16 +50,12 @@ class MainViewModel : ViewModel() {
      fun getSeries() {
         viewModelScope.launch {
             series.value = api.lastseries(api_key, language).results
-        //withContext permet de changer le contexte dans lequel une coroutine s'exécute.
-        //dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers.
-        }
+       }
     }
 
     fun getActors() {
         viewModelScope.launch {
             actors.value = api.lastseries(api_key, language).results
-        //withContext permet de changer le contexte dans lequel une coroutine s'exécute.
-        //dédié aux opérations d'entrée/sortie (I/O), comme les appels réseau ou l'accès aux fichiers.
         }
     }*/
 }

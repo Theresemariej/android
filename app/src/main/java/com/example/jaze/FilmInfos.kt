@@ -30,7 +30,7 @@ import androidx.compose.foundation.layout.height
 @Composable
 fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, filmId: Int) {
 
-     val film by ViewModel.movie.collectAsState()
+     val film by ViewModel.movieById.collectAsState()
 
     LaunchedEffect(filmId)
     {
@@ -45,13 +45,13 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
        verticalArrangement = Arrangement.spacedBy(20.dp)// Espacement entre chaque élément
     )
     {
-        items(film) { infos ->
+        film.forEach { infos ->
      
         Spacer(modifier = Modifier.height(40.dp))
         Text(text = infos.title)
         Image(infos: ModelFilm)   
         Informations(infos: ModelFilm)
-        Acteurs(infos: ModelFilm)
+        Acteurs(infos, navController)
         }
 }
 
@@ -75,7 +75,7 @@ fun Image(infos: ModelFilm){
 fun Informations(infos: ModelFilm){
     
         Text(text = "Genres")
-        infos.genre.forEach { Genre ->
+        infos.genres.forEach { Genre ->
         Text(text = Genre.name) // Supposons que chaque genre a un champ `name`
          }
         Text(text = infos.overview)
@@ -90,7 +90,7 @@ fun Informations(infos: ModelFilm){
 }
 
 @Composable
-fun Acteurs(infos: ModelFilm){
+fun Acteurs(infos: ModelFilm, navController: NavController){
     LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.padding(16.dp),
