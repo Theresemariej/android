@@ -31,6 +31,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,13 +77,16 @@ fun FilmsScreen(ViewModel: MainViewModel,  navController: NavController) {
         SearchBar(
             query = text,
             onQueryChange = { text = it },
-            onSearch = { ViewModel.getSearchMovies(text) },
+            onSearch = { isSearchActive = false; ViewModel.getSearchMovies(text) },
             placeholder = { Text("Chercher") },
+            active =  isSearchActive,
+            onActiveChange = { isSearchActive = it },
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .height(70.dp)
-                        )
+                .padding(10.dp)
+                //.height(90.dp)
+                        ) {
+
+        }
 
 
         LazyVerticalGrid(

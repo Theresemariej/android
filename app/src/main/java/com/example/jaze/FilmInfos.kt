@@ -85,7 +85,7 @@ fun Informations(infos: ModelFilm){
         //Text(text = "Nationalité: ${infos.origin_country.joinToString(", ")}")
         Text(text = "Nationalité:")
         infos.origin_country.forEach { country ->
-        Text(text = country) // Supposons que chaque genre a un champ `name`
+        Text(text = country)
          }
 }
 

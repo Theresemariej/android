@@ -27,22 +27,6 @@ class MainViewModel : ViewModel() {
     val series = MutableStateFlow<List<ModelSerie>>(listOf())
     val actors = MutableStateFlow<List<ModelActeur>>(listOf())
 
-    val _searchText = MutableStateFlow("")
-    val searchText = _searchText.asStateFlow()
-
-    val _isSearching = MutableStateFlow(false)
-    val isSearching = _isSearching.asStateFlow()
-    
-    val jsp = searchText.combine(movies){ text, moviee ->
-        if(text.isBlank()){
-            moviee
-        }else{
-            moviee.filter{
-                it.getSearchMovies(text)
-            }
-        }
-
-    }
 
 
     fun getMovies() {
@@ -53,7 +37,7 @@ class MainViewModel : ViewModel() {
 
      fun getMovieById(id_film:Int) {
         viewModelScope.launch {
-            movieById.value = api.moviedetails(api_key, language,id_film)
+            movieById.value = api.moviedetails(id_film,api_key, language)
         }
     }
 
@@ -63,9 +47,6 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun onSearchTextChange(text: String){
-            _searchText.value = text
-    }
 
 
 /* 

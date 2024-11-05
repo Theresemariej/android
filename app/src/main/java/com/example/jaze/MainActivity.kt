@@ -14,12 +14,15 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -52,6 +55,7 @@ class MainActivity : ComponentActivity() {
                 val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
 
                 val navController = rememberNavController()
+
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
                 val viewModel: MainViewModel = viewModel()
@@ -59,8 +63,8 @@ class MainActivity : ComponentActivity() {
                 //Screen(windowSizeClass, navController)
                 Scaffold(
                     bottomBar = {
-                        if (currentDestination?.route != "Home") {
-                            barreDuBas()
+                        if (currentDestination?.hasRoute<Home>() == false) {
+                            barreDuBas(currentDestination, navController)
                         }
             })
 
@@ -75,14 +79,14 @@ class MainActivity : ComponentActivity() {
                         composable<Acteurs> { ActeursScreen(viewModel, navController) }
                         composable<Home> { Screen(windowSizeClass, navController) }
 
-                        c  composable("FilmInfos/{id}") { navBackStackEntry ->
-                            val id = navBackStackEntry.arguments?.getString("id")
+                        composable("FilmInfos/{id}") { navBackStackEntry ->
+                            val id = navBackStackEntry.arguments?.getInt("id")
                             //on vérifie si l'id n'est pas vide
-                            id?.let { id ->
-                                FilmInfosSreen(
-                                    model = viewModel,
-                                    navController = navController,
-                                    id = id
+                            id?.let {
+                                FilmInfosScreen(
+                                    viewModel,
+                                    navController,
+                                    it
                                 )
                             }
                         }
@@ -92,11 +96,13 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }
 
-
-@composable
-Fun barreDuBas(){
+@Composable
+fun barreDuBas(currentDestination: NavDestination?,
+               navController: NavController
+){
     NavigationBar {
         NavigationBarItem(
             icon = {
@@ -139,3 +145,5 @@ Fun barreDuBas(){
             onClick = { navController.navigate(Acteurs()) })
     }
 }
+
+
