@@ -29,10 +29,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.jaze.ui.theme.JAZETheme
 import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
 class Films
+
+
+@Serializable
+class FilmInfos(val id: Int)
 
 @Serializable
 class Home
@@ -79,16 +84,17 @@ class MainActivity : ComponentActivity() {
                         composable<Acteurs> { ActeursScreen(viewModel, navController) }
                         composable<Home> { Screen(windowSizeClass, navController) }
 
-                        composable("FilmInfos/{id}") { navBackStackEntry ->
-                            val id = navBackStackEntry.arguments?.getInt("id")
+                        composable<FilmInfos> { navBackStackEntry ->
+                            val filmInfos : FilmInfos = navBackStackEntry.toRoute()
+
                             //on vérifie si l'id n'est pas vide
-                            id?.let {
+
                                 FilmInfosScreen(
                                     viewModel,
                                     navController,
-                                    it
+                                    filmInfos.id
                                 )
-                            }
+
                         }
 
                     }

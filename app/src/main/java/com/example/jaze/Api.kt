@@ -12,7 +12,7 @@ interface Api {
                 @Query("language") language: String
     ): ModelListFilms
 
-    @GET("movie/{id}")
+    @GET("movie/{id}?append_to_response=credits")
     suspend fun moviedetails(
         @Path("id") id_film: Int,
         @Query("api_key")  api_key: String,

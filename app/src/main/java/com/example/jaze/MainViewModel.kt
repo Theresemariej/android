@@ -1,5 +1,6 @@
 package com.example.jaze
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,6 +38,7 @@ class MainViewModel : ViewModel() {
 
      fun getMovieById(id_film:Int) {
         viewModelScope.launch {
+            Log.v("zzzzzz", id_film.toString())
             movieById.value = api.moviedetails(id_film,api_key, language)
         }
     }

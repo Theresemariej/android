@@ -48,30 +48,6 @@ fun FilmsScreen(ViewModel: MainViewModel,  navController: NavController) {
         ViewModel.getMovies()
     }
 
-    /*override fun onCreate(savedInstanceState: Bundle?){
-        super.onCreate(savedInstanceState)
-        setContent{
-            SearchFieldComposeTheme{
-                val viewModel = viewModel<MainViewModel>()
-                val searchText by viewModel.searchText.collectAsState()
-                val isSearching by viewModel.isSearching.collectAsState()
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ){TextField(
-                    value=searchText,
-                    getSearchMovies(value)
-                    onValueChange=viewModel::onSearchTextChange,
-                    modifier = Modifier.fillMaxWidth(),
-                    placeholder = {Text(text="Chercher")}
-
-                )
-                Spacer(modifier = Modifier.height(16.dp))}
-        }
-    }
- }*/
-
 
     Column {
         SearchBar(
@@ -109,7 +85,7 @@ fun AfficherFilm(film: ModelFilm, navController: NavController) {
     Column( modifier = Modifier
         .padding(8.dp)
         .clickable {
-            navController.navigate("FilmInfos/${film.id}")//on va dans la classe FilmInfos
+            navController.navigate(FilmInfos(film.id))//on va dans la classe FilmInfos
         }
     ) {
         // Affichage des informations du film
@@ -123,5 +99,6 @@ fun AfficherFilm(film: ModelFilm, navController: NavController) {
                 .fillMaxHeight()
                 .width(250.dp)
         )
+        Text(text = film.release_date)
     }
 }

@@ -24,7 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 
 
 @Composable
@@ -39,24 +39,51 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
 
 
 
-    Column(
-        modifier = Modifier.fillMaxSize().padding(10.dp),
-       horizontalAlignment = Alignment.CenterHorizontally,
-       verticalArrangement = Arrangement.spacedBy(20.dp)// Espacement entre chaque élément
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.padding(16.dp),
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        horizontalArrangement = Arrangement.spacedBy(20.dp)
     )
     {
         film?.let { infos ->
-     
-        Spacer(modifier = Modifier.height(40.dp))
-        Text(text = infos.title)
-        Image(infos)
-        Informations(infos)
-        Acteurs(infos, navController)
+
+            item(span = { GridItemSpan(2) }) {
+                Column {
+                    Spacer(modifier = Modifier.height(40.dp))
+                    Text(text = infos.title)
+                    Image(infos)
+                    Informations(infos)
+                }
+
+            }
+
+
+
+                val lesActeurs=infos.credits.cast.take(6)
+
+                items(lesActeurs) { unActeur ->
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .clickable {
+                                navController.navigate("acteurDetails/${unActeur.id}")
+                            }
+                    ) {
+
+                        //Image(painterResource(id = unActeur.profilePath), contentDescription = unActeur.name)
+                        Text(text = unActeur.name)
+                    }
+                }
+            }
+
         }
 }
 
         
-    }
+
 
 @Composable
 fun Image(infos: ModelFilm){
@@ -64,9 +91,7 @@ fun Image(infos: ModelFilm){
             model = "https://image.tmdb.org/t/p/w500${infos.poster_path}",
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxHeight()
-                .width(250.dp)
+            modifier = Modifier.width(200.dp)
         )
 
 }
@@ -76,7 +101,7 @@ fun Informations(infos: ModelFilm){
     
         Text(text = "Genres")
         infos.genres.forEach { Genre ->
-        Text(text = Genre.name) // Supposons que chaque genre a un champ `name`
+        Text(text = Genre.name)
          }
         Text(text = infos.overview)
         Text(text = infos.original_language)
@@ -87,33 +112,5 @@ fun Informations(infos: ModelFilm){
         infos.origin_country.forEach { country ->
         Text(text = country)
          }
-}
-
-@Composable
-fun Acteurs(infos: ModelFilm, navController: NavController){
-    LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier.padding(16.dp),
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
-            val lesActeurs=infos.credits.cast.take(6)
-            
-            items(lesActeurs) { unActeur ->
-           Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(4.dp)
-                    .clickable {
-                        navController.navigate("acteurDetails/${unActeur.id}")
-                    }
-            ) {
-                
-                //Image(painterResource(id = unActeur.profilePath), contentDescription = unActeur.name)
-                Text(text = unActeur.name)
-            }
-        }
-    }
 }
 
