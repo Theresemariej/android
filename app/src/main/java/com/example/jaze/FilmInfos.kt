@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.grid.items
 import androidx.navigation.NavController
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.ui.text.font.FontWeight
 
 
 @Composable
@@ -55,6 +57,7 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
                     Text(text = infos.title)
                     Image(infos)
                     Informations(infos)
+
                 }
 
             }
@@ -98,11 +101,15 @@ fun Image(infos: ModelFilm){
 
 @Composable
 fun Informations(infos: ModelFilm){
-    
-        Text(text = "Genres")
-        infos.genres.forEach { Genre ->
-        Text(text = Genre.name)
-         }
+
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(text = "Genres:",fontWeight = FontWeight.Bold)
+        infos.genres.forEach { genre ->
+            Text(text = genre.name)
+        }
+    }
         Text(text = infos.overview)
         Text(text = infos.original_language)
         Text(text = "Titre original: ${infos.original_title}")
