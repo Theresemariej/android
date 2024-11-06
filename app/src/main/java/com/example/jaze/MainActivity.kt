@@ -1,7 +1,5 @@
 package com.example.jaze
 
-import ActeursScreen
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -49,6 +47,9 @@ class SerieInfos(val id: Int)
 
 @Serializable
 class Acteurs
+
+@Serializable
+class ActeurInfos(val id: Int)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,6 +109,19 @@ class MainActivity : ComponentActivity() {
                                 viewModel,
                                 navController,
                                 serieInfos.id
+                            )
+
+                        }
+
+                        composable<ActeurInfos> { navBackStackEntry ->
+                            val acteurInfos : ActeurInfos = navBackStackEntry.toRoute()
+
+                            //on vérifie si l'id n'est pas vide
+
+                            SerieInfosScreen(
+                                viewModel,
+                                navController,
+                                acteurInfos.id
                             )
 
                         }

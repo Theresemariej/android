@@ -81,7 +81,7 @@ fun AfficherSerie(serie: ModelSerie, navController: NavController) {
             navController.navigate(SerieInfos(serie.id))//on va dans la classe FilmInfos
         }
     ) {
-        Text(text = serie.name)
+        Text(text = serie.name ?: "Nom non disponible")
 
         AsyncImage(
             model = "https://image.tmdb.org/t/p/w500${serie.poster_path}",
@@ -91,6 +91,6 @@ fun AfficherSerie(serie: ModelSerie, navController: NavController) {
                 .fillMaxHeight()
                 .width(250.dp)
         )
-        Text(text = serie.last_air_date)
+        Text(text = serie.first_air_date ?: "Date non disponible")
     }
 }

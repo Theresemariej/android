@@ -60,12 +60,18 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    /*
-    fun getActors() {
+    fun getActeurs() {
         viewModelScope.launch {
-            actors.value = api.lastseries(api_key, language).results
+            actors.value = api.lastactors(api_key, language).results
         }
-    }*/
+    }
+
+    fun getSearchActeurs(query: String) {
+        viewModelScope.launch {
+            actors.value = api.requestedactors(api_key, language,query).results
+        }
+    }
+
 }
 
 

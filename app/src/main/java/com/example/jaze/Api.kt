@@ -39,11 +39,18 @@ interface Api {
         @Query("query") query: String
     ): ModelListSeries
 
-        /*
+
     @GET("trending/person/week")
-        suspend fun lastseries(
+        suspend fun lastactors(
                 @Query("api_key")  api_key: String, 
                 @Query("language") language: String
     ): ModelListActeurs
-    */
+
+    @GET("search/person")
+    suspend fun requestedactors(
+        @Query("api_key")  api_key: String,
+        @Query("language") language: String,
+        @Query("query") query: String
+    ): ModelListActeurs
+
 }
