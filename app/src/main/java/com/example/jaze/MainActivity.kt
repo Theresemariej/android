@@ -1,7 +1,7 @@
 package com.example.jaze
 
 import ActeursScreen
-import SeriesScreen
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -35,7 +35,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 class Films
 
-
 @Serializable
 class FilmInfos(val id: Int)
 
@@ -44,6 +43,9 @@ class Home
 
 @Serializable
 class Series
+
+@Serializable
+class SerieInfos(val id: Int)
 
 @Serializable
 class Acteurs
@@ -94,6 +96,19 @@ class MainActivity : ComponentActivity() {
                                     navController,
                                     filmInfos.id
                                 )
+
+                        }
+
+                        composable<SerieInfos> { navBackStackEntry ->
+                            val serieInfos : SerieInfos = navBackStackEntry.toRoute()
+
+                            //on vérifie si l'id n'est pas vide
+
+                            SerieInfosScreen(
+                                viewModel,
+                                navController,
+                                serieInfos.id
+                            )
 
                         }
 

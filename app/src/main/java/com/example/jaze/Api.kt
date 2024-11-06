@@ -26,14 +26,20 @@ interface Api {
                 @Query("query") query: String
     ): ModelListFilms
 
-
-/*
       @GET("trending/tv/week")
         suspend fun lastseries(
                 @Query("api_key")  api_key: String, 
                 @Query("language") language: String
     ): ModelListSeries
 
+    @GET("search/tv")
+    suspend fun requestedseries(
+        @Query("api_key")  api_key: String,
+        @Query("language") language: String,
+        @Query("query") query: String
+    ): ModelListSeries
+
+        /*
     @GET("trending/person/week")
         suspend fun lastseries(
                 @Query("api_key")  api_key: String, 

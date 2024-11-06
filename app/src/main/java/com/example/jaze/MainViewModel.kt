@@ -38,7 +38,6 @@ class MainViewModel : ViewModel() {
 
      fun getMovieById(id_film:Int) {
         viewModelScope.launch {
-            Log.v("zzzzzz", id_film.toString())
             movieById.value = api.moviedetails(id_film,api_key, language)
         }
     }
@@ -49,15 +48,19 @@ class MainViewModel : ViewModel() {
         }
     }
 
-
-
-/* 
      fun getSeries() {
         viewModelScope.launch {
             series.value = api.lastseries(api_key, language).results
        }
     }
 
+    fun getSearchSeries(query: String) {
+        viewModelScope.launch {
+            series.value = api.requestedseries(api_key, language,query).results
+        }
+    }
+
+    /*
     fun getActors() {
         viewModelScope.launch {
             actors.value = api.lastseries(api_key, language).results
