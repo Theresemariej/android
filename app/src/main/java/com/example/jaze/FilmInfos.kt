@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -52,11 +53,14 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
         film?.let { infos ->
 
             item(span = { GridItemSpan(2) }) {
-                Column {
-                    Spacer(modifier = Modifier.height(40.dp))
-                    Text(text = infos.title)
+                Column( verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Text(text = infos.title,
+                        fontWeight = FontWeight.Bold, // Pour le gras
+                        fontSize = 24.sp // Pour augmenter la taille
+                    )
                     Image(infos)
                     Informations(infos)
+                    Text(text = "Les Acteurs: ",fontWeight = FontWeight.Bold)
 
                 }
 
@@ -65,6 +69,7 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
 
 
                 val lesActeurs=infos.credits.cast.take(6)
+
 
                 items(lesActeurs) { unActeur ->
                     Column(
@@ -77,6 +82,7 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
                     ) {
 
                         //Image(painterResource(id = unActeur.profilePath), contentDescription = unActeur.name)
+                        Photo(unActeur)
                         Text(text = unActeur.name)
                     }
                 }
@@ -94,7 +100,7 @@ fun Image(infos: ModelFilm){
             model = "https://image.tmdb.org/t/p/w500${infos.poster_path}",
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.width(200.dp)
+            modifier = Modifier.width(250.dp)
         )
 
 }
@@ -105,19 +111,47 @@ fun Informations(infos: ModelFilm){
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = "Genres:",fontWeight = FontWeight.Bold)
+        Text(text = "Genres: ",fontWeight = FontWeight.Bold)
         infos.genres.forEach { genre ->
             Text(text = genre.name)
         }
     }
         Text(text = infos.overview)
-        Text(text = infos.original_language)
-        Text(text = "Titre original: ${infos.original_title}")
+
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ){
+        Text(text = "Titre original: ",fontWeight = FontWeight.Bold)
+        Text(text= infos.original_title?: "")
+    }
 
         //Text(text = "Nationalité: ${infos.origin_country.joinToString(", ")}")
-        Text(text = "Nationalité:")
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(text = "Nationalité: ", fontWeight = FontWeight.Bold)
         infos.origin_country.forEach { country ->
-        Text(text = country)
-         }
+            Text(text = country)
+        }
+    }
+
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(text = "Langue originale: ", fontWeight = FontWeight.Bold)
+        Text(text = infos.original_language)
+    }
+}
+
+
+@Composable
+fun Photo(acteur: Cast){
+    AsyncImage(
+        model = "https://image.tmdb.org/t/p/w500${acteur.profile_path}",
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.width(180.dp)
+    )
+
 }
 
