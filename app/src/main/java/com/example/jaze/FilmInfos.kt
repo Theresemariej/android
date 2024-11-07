@@ -108,7 +108,7 @@ fun Image(infos: ModelFilm){
 @Composable
 fun Informations(infos: ModelFilm){
 
-    Row(
+    Row(//pour mettre touuut les gensres sur la même ligne
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(text = "Genres: ",fontWeight = FontWeight.Bold)
