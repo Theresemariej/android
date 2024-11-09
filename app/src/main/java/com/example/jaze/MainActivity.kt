@@ -48,8 +48,8 @@ class SerieInfos(val id: Int)
 @Serializable
 class Acteurs
 
-@Serializable
-class ActeurInfos(val id: Int)
+/*@Serializable
+class ActeurInfos(val id: Int)*/
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,14 +121,14 @@ class MainActivity : ComponentActivity() {
 
                         }
 
-                        composable<ActeurInfos> { navBackStackEntry ->
+                        /*composable<ActeurInfos> { navBackStackEntry ->
                             val acteurInfos : ActeurInfos = navBackStackEntry.toRoute()
                             SerieInfosScreen(
                                 viewModel,
                                 navController,
                                 acteurInfos.id
                             )
-                        }
+                        }*/
 
                         }
 
