@@ -36,24 +36,25 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilmsScreen(ViewModel: MainViewModel,  navController: NavController) {
+fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowSizeClass: WindowSizeClass) {
 
-    val lesfilms by ViewModel.movies.collectAsState() //permet de collecter tous les films de movies
+    val lesfilms by viewModel.movies.collectAsState() //permet de collecter tous les films de movies
     var text by rememberSaveable { mutableStateOf("") }
     var isSearchActive by rememberSaveable { mutableStateOf(false) } // État de la recherche
 
 
     LaunchedEffect(Unit)
     {
-        ViewModel.getMovies()
+        viewModel.getMovies()
     }
 
 
     Column {
         SearchBar(
+            windowSizeClass = windowSizeClass
             query = text,
             onQueryChange = { text = it },
-            onSearch = { isSearchActive = false; ViewModel.getSearchMovies(text) },
+            onSearch = { isSearchActive = false; viewModel.getSearchMovies(text) },
             placeholder = { Text("Chercher") },
             active =  isSearchActive,
             onActiveChange = { isSearchActive = it },
@@ -66,6 +67,7 @@ fun FilmsScreen(ViewModel: MainViewModel,  navController: NavController) {
 
 
         LazyVerticalGrid(
+            windowSizeClass = windowSizeClass
             columns = GridCells.Fixed(2),
             modifier = Modifier.padding(16.dp),
             contentPadding = PaddingValues(8.dp),

@@ -68,30 +68,41 @@ class MainActivity : ComponentActivity() {
                 val currentDestination = navBackStackEntry?.destination
                 val viewModel: MainViewModel = viewModel()
 
-                //Screen(windowSizeClass, navController)
                 Scaffold(
                     bottomBar = {
                         if (currentDestination?.hasRoute<Home>() == false) {
+                            when (windowClass.windowWidthSizeClass) {
+                                WindowWidthSizeClass.COMPACT -> {
                             barreDuBas(currentDestination, navController)
+                                }
+                            }
+                            else -> {}
                         }
             })
 
 
-                { innerPadding ->
+        { innerPadding ->
+
+            Row( modifier = Modifier.fillMaxSize().padding(innerPadding) ) {
+                if (currentDestination?.hasRoute<Home>() == false
+                    && windowClass.windowWidthSizeClass != WindowWidthSizeClass.COMPACT
+                ) {
+                    barDuCote(navController, currentDestination)
+                    //on met la barre du cote ici (dans le row) et pas dans le else d'en haut pasque c'est pas une bottomBar, et en haut, on veut que des bottomBar
+                }
+
+                Column {
                     NavHost(
                         navController, startDestination = Home(),
                         Modifier.padding(innerPadding)
                     ) {
-                        composable<Films> { FilmsScreen(viewModel, navController) }
+                        composable<Films> { FilmsScreen(viewModel, navController, windowSizeClass) }
                         composable<Series> { SeriesScreen(viewModel, navController) }
                         composable<Acteurs> { ActeursScreen(viewModel, navController) }
                         composable<Home> { Screen(windowSizeClass, navController) }
 
                         composable<FilmInfos> { navBackStackEntry ->
                             val filmInfos : FilmInfos = navBackStackEntry.toRoute()
-
-                            //on vérifie si l'id n'est pas vide
-
                                 FilmInfosScreen(
                                     viewModel,
                                     navController,
@@ -102,9 +113,6 @@ class MainActivity : ComponentActivity() {
 
                         composable<SerieInfos> { navBackStackEntry ->
                             val serieInfos : SerieInfos = navBackStackEntry.toRoute()
-
-                            //on vérifie si l'id n'est pas vide
-
                             SerieInfosScreen(
                                 viewModel,
                                 navController,
@@ -115,30 +123,31 @@ class MainActivity : ComponentActivity() {
 
                         composable<ActeurInfos> { navBackStackEntry ->
                             val acteurInfos : ActeurInfos = navBackStackEntry.toRoute()
-
-                            //on vérifie si l'id n'est pas vide
-
                             SerieInfosScreen(
                                 viewModel,
                                 navController,
                                 acteurInfos.id
                             )
+                        }
 
                         }
 
                     }
                 }
+                
             }
         }
     }
-
+}
 }
 
 @Composable
 fun barreDuBas(currentDestination: NavDestination?,
                navController: NavController
 ){
-    NavigationBar {
+    NavigationBar (
+        containerColor = Color(255, 90, 180)
+        ) {
         NavigationBarItem(
             icon = {
                 Image(
@@ -181,4 +190,58 @@ fun barreDuBas(currentDestination: NavDestination?,
     }
 }
 
+
+
+@Composable
+fun barreDuCote(currentDestination: NavDestination?,
+               navController: NavController
+){
+    NavigationRail(
+        containerColor = Color(255, 90, 180),
+        modifier = Modifier.fillMaxHeight()
+    ) {
+        NavigationRailItem(
+            modifier = Modifier.weight(1f),
+            icon = {
+                Image(
+                    painterResource(R.drawable.film),
+                    contentDescription = "icon film",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }, label = { Text("Films") },
+            selected = currentDestination?.hasRoute<Films>() == true,
+            onClick = { navController.navigate(Films()) })
+
+
+        NavigationRailItem(
+            modifier = Modifier.weight(1f),
+            icon = {
+                Image(
+                    painterResource(R.drawable.film),
+                    contentDescription = "icon film",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }, label = { Text("Series") },
+            selected = currentDestination?.hasRoute<Series>() == true,
+            onClick = { navController.navigate(Series()) })
+
+        NavigationRailItem(
+            modifier = Modifier.weight(1f),
+            icon = {
+                Image(
+                    painterResource(R.drawable.film),
+                    contentDescription = "icon film",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }, label = { Text("Acteurs") },
+            selected = currentDestination?.hasRoute<Acteurs>() == true,
+            onClick = { navController.navigate(Acteurs()) })
+    }
+}
 

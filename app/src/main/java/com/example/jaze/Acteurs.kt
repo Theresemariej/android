@@ -77,9 +77,6 @@ fun ActeursScreen(ViewModel: MainViewModel,  navController: NavController) {
 fun AfficherActeurs(acteur: ModelActeur, navController: NavController) {
     Column( modifier = Modifier
         .padding(8.dp)
-        .clickable {
-            navController.navigate(ActeurInfos(acteur.id))//on va dans la classe FilmInfos
-        }
     ) {
         Text(text = acteur.name ?: "Nom non disponible")
 
@@ -91,5 +88,5 @@ fun AfficherActeurs(acteur: ModelActeur, navController: NavController) {
                 .fillMaxHeight()
                 .width(250.dp)
         )
-    }
+    }nhjjjjjjjjjj
 }

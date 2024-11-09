@@ -58,7 +58,7 @@ fun Screen(windowClass: WindowSizeClass, navController: NavHostController) {
                 Home(innerPadding, navController)
             }
         }
-        else -> { // Ajoute des accolades ici pour le bloc else
+        else -> { 
             Row(
                 modifier = Modifier.fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically
