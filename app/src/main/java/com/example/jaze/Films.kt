@@ -32,11 +32,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowSizeClass: WindowSizeClass) {
+fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowClass: WindowSizeClass) {
 
     val lesfilms by viewModel.movies.collectAsState() //permet de collecter tous les films de movies
     var text by rememberSaveable { mutableStateOf("") }
@@ -48,6 +50,11 @@ fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowSi
         viewModel.getMovies()
     }
 
+
+    val colonnes = when (windowClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.COMPACT -> 2
+        else -> 4
+    }
 
     Column {
         SearchBar(
@@ -68,7 +75,7 @@ fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowSi
 
         LazyVerticalGrid(
             windowSizeClass = windowSizeClass
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Fixed(colonnes),
             modifier = Modifier.padding(16.dp),
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -100,6 +107,11 @@ fun AfficherFilm(film: ModelFilm, navController: NavController) {
             modifier = Modifier
                 .fillMaxHeight()
                 .width(250.dp)
+
+                /* modifier = Modifier
+                .height(150.dp) // Ajustement de la hauteur pour s'adapter au grid
+                .width(100.dp)
+                .clip(RoundedCornerShape(8.dp))*/
         )
         Text(text = film.release_date)
     }

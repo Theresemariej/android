@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, filmId: Int) {
+fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, filmId: Int, windowClass: WindowSizeClass) {
 
      val film by ViewModel.movieById.collectAsState()
 
@@ -40,10 +40,13 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
         ViewModel.getMovieById(filmId)
     }
 
-
+    val colonnes = when (windowClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.COMPACT -> 2
+        else -> 4
+    }
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(colonnes),
         modifier = Modifier.padding(16.dp),
         contentPadding = PaddingValues(8.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -52,7 +55,7 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
     {
         film?.let { infos ->
 
-            item(span = { GridItemSpan(2) }) {
+            item(span = { GridItemSpan(colonnes) }) {
                 Column( verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     Text(text = infos.title,
                         fontWeight = FontWeight.Bold, // Pour le gras
@@ -68,7 +71,7 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
 
 
 
-                val lesActeurs=infos.credits.cast.take(6)
+                val lesActeurs=infos.credits.cast.take(8)
 
 
                 items(lesActeurs) { unActeur ->

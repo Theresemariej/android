@@ -29,6 +29,9 @@ import com.example.jaze.ui.theme.JAZETheme
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+
 
 @Serializable
 class Films
@@ -60,7 +63,7 @@ class MainActivity : ComponentActivity() {
                 /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                    Home(innerPadding)
                 }*/
-                val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+                val windowClass = currentWindowAdaptiveInfo().windowSizeClass
 
                 val navController = rememberNavController()
 
@@ -96,17 +99,18 @@ class MainActivity : ComponentActivity() {
                         navController, startDestination = Home(),
                         Modifier.padding(innerPadding)
                     ) {
-                        composable<Films> { FilmsScreen(viewModel, navController, windowSizeClass) }
+                        composable<Films> { FilmsScreen(viewModel, navController, windowClass) }
                         composable<Series> { SeriesScreen(viewModel, navController) }
                         composable<Acteurs> { ActeursScreen(viewModel, navController) }
-                        composable<Home> { Screen(windowSizeClass, navController) }
+                        composable<Home> { Screen(windowClass, navController) }
 
                         composable<FilmInfos> { navBackStackEntry ->
                             val filmInfos : FilmInfos = navBackStackEntry.toRoute()
                                 FilmInfosScreen(
                                     viewModel,
                                     navController,
-                                    filmInfos.id
+                                    filmInfos.id,
+                                    windowClass
                                 )
 
                         }
