@@ -43,6 +43,11 @@ fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowCl
     val lesfilms by viewModel.movies.collectAsState() //permet de collecter tous les films de movies
     var text by rememberSaveable { mutableStateOf("") }
     var isSearchActive by rememberSaveable { mutableStateOf(false) } // État de la recherche
+    
+    val colonnes = when (windowClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.COMPACT -> 2
+        else -> 4
+    }
 
 
     LaunchedEffect(Unit)
@@ -50,11 +55,6 @@ fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowCl
         viewModel.getMovies()
     }
 
-
-    val colonnes = when (windowClass.windowWidthSizeClass) {
-        WindowWidthSizeClass.COMPACT -> 2
-        else -> 4
-    }
 
     Column {
         SearchBar(

@@ -34,15 +34,14 @@ import androidx.compose.ui.unit.sp
 fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, filmId: Int, windowClass: WindowSizeClass) {
 
      val film by ViewModel.movieById.collectAsState()
+     val colonnes = when (windowClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.COMPACT -> 2
+        else -> 4
+    }
 
     LaunchedEffect(filmId)
     {
         ViewModel.getMovieById(filmId)
-    }
-
-    val colonnes = when (windowClass.windowWidthSizeClass) {
-        WindowWidthSizeClass.COMPACT -> 2
-        else -> 4
     }
 
     LazyVerticalGrid(
