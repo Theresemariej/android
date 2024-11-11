@@ -36,7 +36,7 @@ import androidx.navigation.NavHostController
 @Composable
 fun Home(padding: PaddingValues, navController: NavHostController) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(padding),
+       modifier = Modifier.fillMaxSize().padding(padding),
        horizontalAlignment = Alignment.CenterHorizontally,
        verticalArrangement = Arrangement.spacedBy(20.dp)// Espacement entre chaque élément
     )
