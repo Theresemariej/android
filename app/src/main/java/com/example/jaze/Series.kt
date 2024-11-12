@@ -25,6 +25,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.font.FontWeight
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,8 +82,6 @@ fun AfficherSerie(serie: ModelSerie, navController: NavController) {
             navController.navigate(SerieInfos(serie.id))//on va dans la classe FilmInfos
         }
     ) {
-        Text(text = serie.name ?: "Nom non disponible")
-
         AsyncImage(
             model = "https://image.tmdb.org/t/p/w500${serie.poster_path}",
             contentDescription = null,
@@ -91,6 +90,7 @@ fun AfficherSerie(serie: ModelSerie, navController: NavController) {
                 .fillMaxHeight()
                 .width(250.dp)
         )
+        Text(text = serie.name ?: "Nom non disponible",fontWeight = FontWeight.Bold)
         Text(text = serie.first_air_date ?: "Date non disponible")
     }
 }

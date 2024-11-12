@@ -30,10 +30,9 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.draw.clip
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.ui.text.font.FontWeight
+import androidx.window.core.layout.WindowSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,7 +44,7 @@ fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowCl
     var isSearchActive by rememberSaveable { mutableStateOf(false) } // État de la recherche
     
     val colonnes = when (windowClass.windowWidthSizeClass) {
-        WindowWidthSizeClass.COMPACT -> 2
+        WindowWidthSizeClass.COMPACT -> { 2}
         else -> 4
     }
 
@@ -58,7 +57,6 @@ fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowCl
 
     Column {
         SearchBar(
-            windowSizeClass = windowSizeClass
             query = text,
             onQueryChange = { text = it },
             onSearch = { isSearchActive = false; viewModel.getSearchMovies(text) },
@@ -74,7 +72,6 @@ fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowCl
 
 
         LazyVerticalGrid(
-            windowSizeClass = windowSizeClass
             columns = GridCells.Fixed(colonnes),
             modifier = Modifier.padding(16.dp),
             contentPadding = PaddingValues(8.dp),
@@ -98,7 +95,6 @@ fun AfficherFilm(film: ModelFilm, navController: NavController) {
         }
     ) {
         // Affichage des informations du film
-        Text(text = film.title) // Affichage du titre du film
 
         AsyncImage(
             model = "https://image.tmdb.org/t/p/w500${film.poster_path}",
@@ -107,12 +103,8 @@ fun AfficherFilm(film: ModelFilm, navController: NavController) {
             modifier = Modifier
                 .fillMaxHeight()
                 .width(250.dp)
-
-                /* modifier = Modifier
-                .height(150.dp) // Ajustement de la hauteur pour s'adapter au grid
-                .width(100.dp)
-                .clip(RoundedCornerShape(8.dp))*/
         )
+        Text(text = film.title,fontWeight = FontWeight.Bold) // Affichage du titre du film
         Text(text = film.release_date)
     }
 }

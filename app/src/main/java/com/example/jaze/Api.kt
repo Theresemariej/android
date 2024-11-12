@@ -39,6 +39,13 @@ interface Api {
         @Query("query") query: String
     ): ModelListSeries
 
+    @GET("tv/{id}?append_to_response=credits")
+    suspend fun seriedetails(
+        @Path("id") id_serie: Int,
+        @Query("api_key")  api_key: String,
+        @Query("language") language: String
+    ): ModelSerie
+
 
     @GET("trending/person/week")
         suspend fun lastactors(

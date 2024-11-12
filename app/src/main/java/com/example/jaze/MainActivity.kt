@@ -5,10 +5,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.NavigationRailItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
@@ -29,8 +40,8 @@ import com.example.jaze.ui.theme.JAZETheme
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.ui.graphics.Color
+import androidx.window.core.layout.WindowWidthSizeClass
 
 
 @Serializable
@@ -76,28 +87,28 @@ class MainActivity : ComponentActivity() {
                         if (currentDestination?.hasRoute<Home>() == false) {
                             when (windowClass.windowWidthSizeClass) {
                                 WindowWidthSizeClass.COMPACT -> {
-                            barreDuBas(currentDestination, navController)
+                                    barreDuBas(currentDestination, navController)
                                 }
                             }
-                            else -> {}
                         }
-            })
+            }, contentWindowInsets = WindowInsets(0)
+                )
 
 
         { innerPadding ->
-
             Row( modifier = Modifier.fillMaxSize().padding(innerPadding) ) {
                 if (currentDestination?.hasRoute<Home>() == false
                     && windowClass.windowWidthSizeClass != WindowWidthSizeClass.COMPACT
                 ) {
-                    barDuCote(navController, currentDestination)
-                    //on met la barre du cote ici (dans le row) et pas dans le else d'en haut pasque c'est pas une bottomBar, et en haut, on veut que des bottomBar
+                    barreDuCote(currentDestination,navController)
+                    //on met la barre du cote ici (dans le row) et pas en haut pasque c'est pas une bottomBar, et en haut, on veut que des bottomBar
                 }
 
                 Column {
                     NavHost(
                         navController, startDestination = Home(),
-                        Modifier.padding(innerPadding)
+                        //Modifier.padding(innerPadding)
+                        //pour pas qu'y ait la barre blanche déguelasse
                     ) {
                         composable<Films> { FilmsScreen(viewModel, navController, windowClass) }
                         composable<Series> { SeriesScreen(viewModel, navController) }
@@ -109,8 +120,8 @@ class MainActivity : ComponentActivity() {
                                 FilmInfosScreen(
                                     viewModel,
                                     navController,
-                                    filmInfos.id,
-                                    windowClass
+                                    windowClass,
+                                    filmInfos.id
                                 )
 
                         }
@@ -124,7 +135,6 @@ class MainActivity : ComponentActivity() {
                             )
 
                         }
-
                         /*composable<ActeurInfos> { navBackStackEntry ->
                             val acteurInfos : ActeurInfos = navBackStackEntry.toRoute()
                             SerieInfosScreen(
@@ -135,10 +145,8 @@ class MainActivity : ComponentActivity() {
                         }*/
 
                         }
-
                     }
                 }
-                
             }
         }
     }
@@ -147,10 +155,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun barreDuBas(currentDestination: NavDestination?,
-               navController: NavController
-){
+               navController: NavController){
     NavigationBar (
-        containerColor = Color(255, 90, 180)
+        containerColor = Color(250, 206, 230, 255),
+        //modifier = Modifier.fillMaxWidth()
         ) {
         NavigationBarItem(
             icon = {
@@ -163,6 +171,9 @@ fun barreDuBas(currentDestination: NavDestination?,
                 )
             }, label = { Text("Films") },
             selected = currentDestination?.hasRoute<Films>() == true,
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color(241, 130, 130, 255)
+            ),
             onClick = { navController.navigate(Films()) })
 
 
@@ -177,6 +188,9 @@ fun barreDuBas(currentDestination: NavDestination?,
                 )
             }, label = { Text("Series") },
             selected = currentDestination?.hasRoute<Series>() == true,
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color(241, 130, 130, 255)
+            ),
             onClick = { navController.navigate(Series()) })
 
         NavigationBarItem(
@@ -190,6 +204,9 @@ fun barreDuBas(currentDestination: NavDestination?,
                 )
             }, label = { Text("Acteurs") },
             selected = currentDestination?.hasRoute<Acteurs>() == true,
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color(241, 130, 130, 255)
+            ),
             onClick = { navController.navigate(Acteurs()) })
     }
 }
@@ -201,7 +218,7 @@ fun barreDuCote(currentDestination: NavDestination?,
                navController: NavController
 ){
     NavigationRail(
-        containerColor = Color(255, 90, 180),
+        containerColor = Color(250, 206, 230, 255),
         modifier = Modifier.fillMaxHeight()
     ) {
         NavigationRailItem(
@@ -216,6 +233,9 @@ fun barreDuCote(currentDestination: NavDestination?,
                 )
             }, label = { Text("Films") },
             selected = currentDestination?.hasRoute<Films>() == true,
+            colors = NavigationRailItemDefaults.colors(
+                indicatorColor = Color(248, 123, 123, 255)
+            ),
             onClick = { navController.navigate(Films()) })
 
 
@@ -231,6 +251,9 @@ fun barreDuCote(currentDestination: NavDestination?,
                 )
             }, label = { Text("Series") },
             selected = currentDestination?.hasRoute<Series>() == true,
+            colors = NavigationRailItemDefaults.colors(
+                indicatorColor = Color(248, 123, 123, 255)
+            ),
             onClick = { navController.navigate(Series()) })
 
         NavigationRailItem(
@@ -245,6 +268,9 @@ fun barreDuCote(currentDestination: NavDestination?,
                 )
             }, label = { Text("Acteurs") },
             selected = currentDestination?.hasRoute<Acteurs>() == true,
+            colors = NavigationRailItemDefaults.colors(
+                indicatorColor = Color(248, 123, 123, 255)
+            ),
             onClick = { navController.navigate(Acteurs()) })
     }
 }

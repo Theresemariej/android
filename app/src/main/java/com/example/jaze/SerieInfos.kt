@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.grid.items
 import androidx.navigation.NavController
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.width
@@ -31,7 +33,7 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun SerieInfosScreen(ViewModel: MainViewModel,  navController: NavController, filmId: Int) {
+fun SerieInfosScreen(ViewModel: MainViewModel,  navController: NavController, serieId: Int) {
 
      val serie by ViewModel.serieById.collectAsState()
 
@@ -82,7 +84,7 @@ fun SerieInfosScreen(ViewModel: MainViewModel,  navController: NavController, fi
                     ) {
 
                         //Image(painterResource(id = unActeur.profilePath), contentDescription = unActeur.name)
-                        Photo(unActeur)
+                        PhotoActeurSerie(unActeur)
                         Text(text = unActeur.name)
                     }
                 }
@@ -105,10 +107,11 @@ fun Image(infos: ModelSerie){
 
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Informations(infos: ModelSerie){
 
-    Row(//pour mettre touuut les gensres sur la même ligne
+    FlowRow(//pour mettre touuut les genres sur la même ligne
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(text = "Genres: ",fontWeight = FontWeight.Bold)
@@ -145,7 +148,7 @@ fun Informations(infos: ModelSerie){
 
 
 @Composable
-fun Photo(acteur: Cast){
+fun PhotoActeurSerie(acteur: Cast){
     AsyncImage(
         model = "https://image.tmdb.org/t/p/w500${acteur.profile_path}",
         contentDescription = null,

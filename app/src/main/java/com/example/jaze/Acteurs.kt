@@ -25,6 +25,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.font.FontWeight
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,8 +79,6 @@ fun AfficherActeurs(acteur: ModelActeur, navController: NavController) {
     Column( modifier = Modifier
         .padding(8.dp)
     ) {
-        Text(text = acteur.name ?: "Nom non disponible")
-
         AsyncImage(
             model = "https://image.tmdb.org/t/p/w500${acteur.profile_path}",
             contentDescription = null,
@@ -88,5 +87,6 @@ fun AfficherActeurs(acteur: ModelActeur, navController: NavController) {
                 .fillMaxHeight()
                 .width(250.dp)
         )
-    }nhjjjjjjjjjj
+        Text(text = acteur.name ?: "Nom non disponible",fontWeight = FontWeight.Bold)
+    }
 }

@@ -23,9 +23,10 @@ class MainViewModel : ViewModel() {
 
     val movies = MutableStateFlow<List<ModelFilm>>(listOf())
     val movieById =  MutableStateFlow<ModelFilm?>(null)
-    //val searchMovies = MutableStateFlow<List<ModelFilm>>(listOf())
 
     val series = MutableStateFlow<List<ModelSerie>>(listOf())
+    val serieById =  MutableStateFlow<ModelSerie?>(null)
+
     val actors = MutableStateFlow<List<ModelActeur>>(listOf())
 
 
@@ -57,6 +58,12 @@ class MainViewModel : ViewModel() {
     fun getSearchSeries(query: String) {
         viewModelScope.launch {
             series.value = api.requestedseries(api_key, language,query).results
+        }
+    }
+
+    fun getSerieById(id_serie:Int) {
+        viewModelScope.launch {
+            serieById.value = api.seriedetails(id_serie,api_key, language)
         }
     }
 

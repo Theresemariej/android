@@ -30,6 +30,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 
 
@@ -134,7 +136,12 @@ fun Contact(){
 fun Bouton(navController: NavHostController) {
     Button(
         onClick = { navController.navigate(Films()) },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(250, 206, 230, 255) // Appliquer la couleur ici
+        )
+
     ) {
         Text(text = "Afficher films")
+
     }
 }

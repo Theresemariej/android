@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.grid.items
 import androidx.navigation.NavController
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.width
@@ -28,14 +30,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.window.core.layout.WindowSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 
 
 @Composable
-fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, filmId: Int, windowClass: WindowSizeClass) {
+fun FilmInfosScreen(ViewModel: MainViewModel, navController: NavController, windowClass: WindowSizeClass, filmId: Int) {
 
      val film by ViewModel.movieById.collectAsState()
-     val colonnes = when (windowClass.windowWidthSizeClass) {
-        WindowWidthSizeClass.COMPACT -> 2
+    val colonnes = when (windowClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.COMPACT -> { 2}
         else -> 4
     }
 
@@ -84,8 +88,8 @@ fun FilmInfosScreen(ViewModel: MainViewModel,  navController: NavController, fil
                     ) {
 
                         //Image(painterResource(id = unActeur.profilePath), contentDescription = unActeur.name)
-                        Photo(unActeur)
-                        Text(text = unActeur.name)
+                        PhotoActeurFilm(unActeur)
+                        Text(text = unActeur.name?: "")
                     }
                 }
             }
@@ -107,10 +111,23 @@ fun Image(infos: ModelFilm){
 
 }
 
+
+@Composable
+fun PhotoActeurFilm(acteur: Cast){
+    AsyncImage(
+        model = "https://image.tmdb.org/t/p/w500${acteur.profile_path}",
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.width(180.dp)
+    )
+
+}
+
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Informations(infos: ModelFilm){
 
-    Row(//pour mettre touuut les gensres sur la même ligne
+    FlowRow(//pour mettre touuut les genres sur la même ligne
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(text = "Genres: ",fontWeight = FontWeight.Bold)
@@ -146,14 +163,4 @@ fun Informations(infos: ModelFilm){
 }
 
 
-@Composable
-fun Photo(acteur: Cast){
-    AsyncImage(
-        model = "https://image.tmdb.org/t/p/w500${acteur.profile_path}",
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.width(180.dp)
-    )
-
-}
 
