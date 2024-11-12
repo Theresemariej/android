@@ -80,11 +80,11 @@ fun FilmInfosScreen(ViewModel: MainViewModel, navController: NavController, wind
                 items(lesActeurs) { unActeur ->
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
+                        /*modifier = Modifier
                             .padding(4.dp)
                             .clickable {
                                 navController.navigate("acteurDetails/${unActeur.id}")
-                            }
+                            }*/
                     ) {
 
                         //Image(painterResource(id = unActeur.profilePath), contentDescription = unActeur.name)
