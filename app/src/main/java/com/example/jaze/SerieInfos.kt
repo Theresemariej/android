@@ -30,12 +30,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.window.core.layout.WindowSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 
 
 @Composable
-fun SerieInfosScreen(ViewModel: MainViewModel,  navController: NavController, serieId: Int) {
+fun SerieInfosScreen(ViewModel: MainViewModel, navController: NavController, windowClass: WindowSizeClass, serieId: Int) {
 
      val serie by ViewModel.serieById.collectAsState()
+
+    val colonnes = when (windowClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.COMPACT -> { 2}
+        else -> 4
+    }
 
     LaunchedEffect(serieId)
     {
@@ -45,7 +52,7 @@ fun SerieInfosScreen(ViewModel: MainViewModel,  navController: NavController, se
 
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(colonnes),
         modifier = Modifier.padding(16.dp),
         contentPadding = PaddingValues(8.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -54,7 +61,7 @@ fun SerieInfosScreen(ViewModel: MainViewModel,  navController: NavController, se
     {
         serie?.let { infos ->
 
-            item(span = { GridItemSpan(2) }) {
+            item(span = { GridItemSpan(colonnes) }) {
                 Column( verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     Text(text = infos.name,
                         fontWeight = FontWeight.Bold, // Pour le gras

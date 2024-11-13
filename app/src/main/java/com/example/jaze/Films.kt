@@ -45,7 +45,7 @@ fun FilmsScreen(viewModel: MainViewModel,  navController:NavController, windowCl
     
     val colonnes = when (windowClass.windowWidthSizeClass) {
         WindowWidthSizeClass.COMPACT -> { 2}
-        else -> 4
+        else -> 3
     }
 
 

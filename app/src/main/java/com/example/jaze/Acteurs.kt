@@ -26,16 +26,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontWeight
+import androidx.window.core.layout.WindowSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActeursScreen(ViewModel: MainViewModel,  navController: NavController) {
+fun ActeursScreen(ViewModel: MainViewModel,  navController: NavController, windowClass: WindowSizeClass) {
 
     val lesacteurs by ViewModel.actors.collectAsState()
     var text by rememberSaveable { mutableStateOf("") }
     var isSearchActive by rememberSaveable { mutableStateOf(false) } // État de la recherche
 
+    val colonnes = when (windowClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.COMPACT -> { 2}
+        else -> 3
+    }
 
     LaunchedEffect(Unit)
     {
@@ -60,7 +66,7 @@ fun ActeursScreen(ViewModel: MainViewModel,  navController: NavController) {
 
 
         LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Fixed(colonnes),
             modifier = Modifier.padding(16.dp),
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),

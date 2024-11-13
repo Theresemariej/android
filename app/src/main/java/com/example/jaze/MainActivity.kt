@@ -108,11 +108,11 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController, startDestination = Home(),
                         //Modifier.padding(innerPadding)
-                        //pour pas qu'y ait la barre blanche déguelasse
+                        //pour pas qu'y ait la barre blanche moche
                     ) {
                         composable<Films> { FilmsScreen(viewModel, navController, windowClass) }
-                        composable<Series> { SeriesScreen(viewModel, navController) }
-                        composable<Acteurs> { ActeursScreen(viewModel, navController) }
+                        composable<Series> { SeriesScreen(viewModel, navController, windowClass) }
+                        composable<Acteurs> { ActeursScreen(viewModel, navController,windowClass) }
                         composable<Home> { Screen(windowClass, navController) }
 
                         composable<FilmInfos> { navBackStackEntry ->
@@ -131,6 +131,7 @@ class MainActivity : ComponentActivity() {
                             SerieInfosScreen(
                                 viewModel,
                                 navController,
+                                windowClass,
                                 serieInfos.id
                             )
 
@@ -163,7 +164,7 @@ fun barreDuBas(currentDestination: NavDestination?,
         NavigationBarItem(
             icon = {
                 Image(
-                    painterResource(R.drawable.film),
+                    painterResource(R.drawable.cam),
                     contentDescription = "icon film",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -180,7 +181,7 @@ fun barreDuBas(currentDestination: NavDestination?,
         NavigationBarItem(
             icon = {
                 Image(
-                    painterResource(R.drawable.film),
+                    painterResource(R.drawable.serie),
                     contentDescription = "icon film",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -196,7 +197,7 @@ fun barreDuBas(currentDestination: NavDestination?,
         NavigationBarItem(
             icon = {
                 Image(
-                    painterResource(R.drawable.film),
+                    painterResource(R.drawable.star),
                     contentDescription = "icon film",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -225,7 +226,7 @@ fun barreDuCote(currentDestination: NavDestination?,
             modifier = Modifier.weight(1f),
             icon = {
                 Image(
-                    painterResource(R.drawable.film),
+                    painterResource(R.drawable.cam),
                     contentDescription = "icon film",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -243,7 +244,7 @@ fun barreDuCote(currentDestination: NavDestination?,
             modifier = Modifier.weight(1f),
             icon = {
                 Image(
-                    painterResource(R.drawable.film),
+                    painterResource(R.drawable.serie),
                     contentDescription = "icon film",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -260,7 +261,7 @@ fun barreDuCote(currentDestination: NavDestination?,
             modifier = Modifier.weight(1f),
             icon = {
                 Image(
-                    painterResource(R.drawable.film),
+                    painterResource(R.drawable.star),
                     contentDescription = "icon film",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
