@@ -81,6 +81,7 @@ class MainActivity : ComponentActivity() {
                 /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                    Home(innerPadding)
                 }*/
+                val Horreur = "horror"
                 val windowClass = currentWindowAdaptiveInfo().windowSizeClass
 
                 val navController = rememberNavController()
@@ -121,7 +122,7 @@ class MainActivity : ComponentActivity() {
                         composable<Series> { SeriesScreen(viewModel, navController, windowClass) }
                         composable<Acteurs> { ActeursScreen(viewModel, navController,windowClass) }
                         composable<Home> { Screen(windowClass, navController) }
-                        composable<navigation> {  NavScreen(viewModel) }
+                        composable<navigation> {  NavScreen(viewModel,navController, Horreur) }
 
                         composable<FilmInfosDest> { navBackStackEntry ->
                             val filmInfos : FilmInfosDest = navBackStackEntry.toRoute()

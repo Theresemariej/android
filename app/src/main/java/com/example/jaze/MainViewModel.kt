@@ -29,6 +29,14 @@ class MainViewModel : ViewModel() {
 
     val actors = MutableStateFlow<List<ModelActeur>>(listOf())
 
+    val col = MutableStateFlow<List<Result>>(listOf())
+
+
+    fun getCollection(query: String) {
+        viewModelScope.launch {
+            col.value = api.collection(api_key,query).results
+        }
+    }
 
 
     fun getMovies() {
