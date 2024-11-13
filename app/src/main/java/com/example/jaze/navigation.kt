@@ -1,8 +1,11 @@
 package com.example.jaze
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -12,9 +15,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.jaze.MainViewModel
 
 @Composable
@@ -41,7 +46,20 @@ fun NavScreen(viewModel: MainViewModel, navController: NavController, genree: St
 
 @Composable
 fun AfficherCollection(collect: Result, navController: NavController) {
+ Column( modifier = Modifier
+     .padding(8.dp)
+ ){
 
-    Text(text= collect.name)
+     AsyncImage(
+         model = "https://image.tmdb.org/t/p/w500${collect.poster_path}",
+         contentDescription = null,
+         contentScale = ContentScale.Crop,
+         modifier = Modifier
+             .fillMaxHeight()
+             .width(250.dp)
+     )
+     Text(text= collect.name)
+ }
+
 
 }
