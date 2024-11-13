@@ -52,16 +52,16 @@ class FilmInfosDest(val id: Int)
 @Serializable
 class FilmsDest
 
-
-
 @Serializable
 class Home
 
 @Serializable
 class Series
 
+//@Serializable
+//class SerieInfos(val id: Int)
 @Serializable
-class SerieInfos(val id: Int)
+class SerieInfosD(val id :Int)
 
 @Serializable
 class Acteurs
@@ -135,8 +135,8 @@ class MainActivity : ComponentActivity() {
 
                         }
 
-                        composable<SerieInfos> { navBackStackEntry ->
-                            val serieInfos : SerieInfos = navBackStackEntry.toRoute()
+                        composable<SerieInfosD> { navBackStackEntry ->
+                            val serieInfos : SerieInfosD = navBackStackEntry.toRoute()
                             SerieInfosScreen(
                                 viewModel,
                                 navController,
@@ -229,7 +229,7 @@ fun barreDuBas(currentDestination: NavDestination?,
                         .size(20.dp)
                 )
             }, label = { Text("fleur") },
-            selected = currentDestination?.hasRoute<FilmsDest>() == true,
+            selected = currentDestination?.hasRoute<navigation>() == true,
             colors = NavigationBarItemDefaults.colors(
                 indicatorColor = Color(241, 130, 130, 255)
             ),
@@ -298,6 +298,22 @@ fun barreDuCote(currentDestination: NavDestination?,
                 indicatorColor = Color(248, 123, 123, 255)
             ),
             onClick = { navController.navigate(Acteurs()) })
+
+        NavigationRailItem(
+            icon = {
+                Image(
+                    painterResource(R.drawable.fleur),
+                    contentDescription = "icon film",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }, label = { Text("fleur") },
+            selected = currentDestination?.hasRoute<FilmsDest>() == true,
+            colors = NavigationRailItemDefaults.colors(
+                indicatorColor = Color(241, 130, 130, 255)
+            ),
+            onClick = { navController.navigate(navigation()) })
     }
 }
 

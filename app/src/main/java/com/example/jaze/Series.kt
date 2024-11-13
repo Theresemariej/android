@@ -85,7 +85,7 @@ fun AfficherSerie(serie: ModelSerie, navController: NavController) {
     Column( modifier = Modifier
         .padding(8.dp)
         .clickable {
-            navController.navigate(SerieInfos(serie.id))//on va dans la classe FilmInfos
+            navController.navigate(SerieInfosD(serie.id))//serie.id
         }
     ) {
         AsyncImage(
