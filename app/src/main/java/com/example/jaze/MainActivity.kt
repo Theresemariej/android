@@ -44,11 +44,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.window.core.layout.WindowWidthSizeClass
 
 
-@Serializable
-class Films
 
 @Serializable
-class FilmInfos(val id: Int)
+class FilmInfosDest(val id: Int)
+
+
+@Serializable
+class FilmsDest
+
+
 
 @Serializable
 class Home
@@ -61,6 +65,9 @@ class SerieInfos(val id: Int)
 
 @Serializable
 class Acteurs
+
+@Serializable
+class navigation
 
 /*@Serializable
 class ActeurInfos(val id: Int)*/
@@ -110,13 +117,14 @@ class MainActivity : ComponentActivity() {
                         //Modifier.padding(innerPadding)
                         //pour pas qu'y ait la barre blanche moche
                     ) {
-                        composable<Films> { FilmsScreen(viewModel, navController, windowClass) }
+                        composable<FilmsDest> { FilmsScreen(viewModel, navController, windowClass) }
                         composable<Series> { SeriesScreen(viewModel, navController, windowClass) }
                         composable<Acteurs> { ActeursScreen(viewModel, navController,windowClass) }
                         composable<Home> { Screen(windowClass, navController) }
+                        composable<navigation> {  NavScreen(viewModel) }
 
-                        composable<FilmInfos> { navBackStackEntry ->
-                            val filmInfos : FilmInfos = navBackStackEntry.toRoute()
+                        composable<FilmInfosDest> { navBackStackEntry ->
+                            val filmInfos : FilmInfosDest = navBackStackEntry.toRoute()
                                 FilmInfosScreen(
                                     viewModel,
                                     navController,
@@ -171,11 +179,11 @@ fun barreDuBas(currentDestination: NavDestination?,
                         .size(20.dp)
                 )
             }, label = { Text("Films") },
-            selected = currentDestination?.hasRoute<Films>() == true,
+            selected = currentDestination?.hasRoute<FilmsDest>() == true,
             colors = NavigationBarItemDefaults.colors(
                 indicatorColor = Color(241, 130, 130, 255)
             ),
-            onClick = { navController.navigate(Films()) })
+            onClick = { navController.navigate(FilmsDest()) })
 
 
         NavigationBarItem(
@@ -209,6 +217,22 @@ fun barreDuBas(currentDestination: NavDestination?,
                 indicatorColor = Color(241, 130, 130, 255)
             ),
             onClick = { navController.navigate(Acteurs()) })
+
+        NavigationBarItem(
+            icon = {
+                Image(
+                    painterResource(R.drawable.fleur),
+                    contentDescription = "icon film",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }, label = { Text("fleur") },
+            selected = currentDestination?.hasRoute<FilmsDest>() == true,
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color(241, 130, 130, 255)
+            ),
+            onClick = { navController.navigate(navigation()) })
     }
 }
 
@@ -233,11 +257,11 @@ fun barreDuCote(currentDestination: NavDestination?,
                         .size(20.dp)
                 )
             }, label = { Text("Films") },
-            selected = currentDestination?.hasRoute<Films>() == true,
+            selected = currentDestination?.hasRoute<FilmsDest>() == true,
             colors = NavigationRailItemDefaults.colors(
                 indicatorColor = Color(248, 123, 123, 255)
             ),
-            onClick = { navController.navigate(Films()) })
+            onClick = { navController.navigate(FilmsDest()) })
 
 
         NavigationRailItem(

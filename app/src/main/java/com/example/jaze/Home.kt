@@ -135,7 +135,7 @@ fun Contact(){
 @Composable
 fun Bouton(navController: NavHostController) {
     Button(
-        onClick = { navController.navigate(Films()) },
+        onClick = { navController.navigate(FilmsDest()) },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(250, 206, 230, 255) // Appliquer la couleur ici
         )
